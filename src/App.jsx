@@ -1,18 +1,46 @@
-import './App.css';
-import Card from './components/Card';
-function App() {
-  return (
-     <div className="container">
-      <div className="login-card">
-        <h1> LIMPIEZA DE AULAS <br /> EPET Nº 20 </h1>
-        <img src="" alt="Carro de limpieza" className="icon"/>
+import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AulasList from './pages/AulasList';
+import AulaDetalle from './pages/AulaDetalle';
+import ProtectedRoute from './routes/ProtectedRoute';
+import { useAuth } from './providers/AuthProvider';
 
-        <button className="boton"> INICIAR SESIÓN </button>
-        <p className="subtitle"> ¿NO TIENES SESIÓN? </p>
-        <button className="boton"> REGISTRARSE </button>
-      </div>
+export default function App() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  return (
+    <div className="container py-4">
+      <header className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="h4 m-0">Limpieza de Aulas • EPET N°20</h1>
+        <nav className="d-flex gap-2">
+          <Link className="btn btn-outline-light btn-sm" to="/">Inicio</Link>
+          {user ? (
+            <>
+              <Link className="btn btn-outline-light btn-sm" to="/aulas">Aulas</Link>
+              <button className="btn btn-danger btn-sm" onClick={() => { logout(); navigate('/'); }}>Salir</button>
+            </>
+          ) : (
+            <>
+              <Link className="btn btn-outline-light btn-sm" to="/login">Iniciar sesión</Link>
+              <Link className="btn btn-outline-light btn-sm" to="/register">Registrarse</Link>
+            </>
+          )}
+        </nav>
+      </header>
+
+      <Routes>
+        <Route path="/" element={<Navigate to={user ? '/aulas' : '/login'} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/aulas" element={<AulasList />} />
+          <Route path="/aulas/:id" element={<AulaDetalle />} />
+        </Route>
+        <Route path="*" element={<p>No encontrado</p>} />
+      </Routes>
     </div>
   );
 }
-export default App;
 
