@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import AulasList from './pages/AulasList';
+import Inicio from './pages/inicio';
+import Registro from './pages/registro';
+import AulaList from './pages/AulaList';
 import AulaDetalle from './pages/AulaDetalle';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { useAuth } from './providers/AuthProvider';
@@ -23,19 +23,19 @@ export default function App() {
             </>
           ) : (
             <>
-              <Link className="btn btn-outline-light btn-sm" to="/login">Iniciar sesión</Link>
-              <Link className="btn btn-outline-light btn-sm" to="/register">Registrarse</Link>
+              <Link className="btn btn-outline-light btn-sm" to="/inicio">Iniciar sesión</Link>
+              <Link className="btn btn-outline-light btn-sm" to="/registro">Registrarse</Link>
             </>
           )}
         </nav>
       </header>
 
       <Routes>
-        <Route path="/" element={<Navigate to={user ? '/aulas' : '/login'} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Navigate to={user ? '/aulas' : '/inicio'} />} />
+        <Route path="/inicio" element={<Inicio />} />
+        <Route path="/registro" element={<Registro />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/aulas" element={<AulasList />} />
+          <Route path="/aulas" element={<AulaList />} />
           <Route path="/aulas/:id" element={<AulaDetalle />} />
         </Route>
         <Route path="*" element={<p>No encontrado</p>} />
