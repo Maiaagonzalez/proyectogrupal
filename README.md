@@ -68,3 +68,34 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Nombre del proyecto
+
+Limpieza de aulas-proyectogrupal
+
+## Descripción breve 
+
+El proyecto se trata sobre una pagina en la que se lleva el control de la limpieza de las aulas.
+
+## Integrantes
+
+*Maia Gonzalez
+*Milena Garrido
+*Abril Calfin
+*Lautaro Cesari
+*Alan Molina
+
+## Tecnologias utilizadas
+
+*node.js
+*firestore
+*css
+
+## Funcionalidades implementadas
+
+*Navegación con React Router
+*Separación por roles: frontend, backend, diseño, documentación.
+*Login simulado.
+![alt text](2abb.jpg)
+![alt text](<Imagen de WhatsApp 2025-09-02 a las 22.27.47_1fe34893.jpg>)
+![alt text](2ab.jpg)
