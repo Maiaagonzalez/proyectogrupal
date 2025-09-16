@@ -6,6 +6,9 @@ import AulaDetalle from './pages/AulaDetalle';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { useAuth } from './providers/AuthProvider';
 
+
+
+export default App;
 export default function App() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -16,10 +19,12 @@ export default function App() {
         <h1 className="h4 m-0">Limpieza de Aulas • EPET N°20</h1>
         <nav className="d-flex gap-2">
           <Link className="btn btn-outline-light btn-sm" to="/">Inicio</Link>
+         
           {user ? (
             <>
               <Link className="btn btn-outline-light btn-sm" to="/aulas">Aulas</Link>
               <button className="btn btn-danger btn-sm" onClick={() => { logout(); navigate('/'); }}>Salir</button>
+              
             </>
           ) : (
             <>
@@ -37,8 +42,12 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/aulas" element={<AulaList />} />
           <Route path="/aulas/:id" element={<AulaDetalle />} />
-        </Route>
-        <Route path="*" element={<p>No encontrado</p>} />
+          <Routes>
+  <Route path="/" element={<Navigate to={user ? '/aulas' : '/inicio'} />} />
+  <Route path="/inicio" element={<Inicio />} />
+  <Route path="/registro" element={<Registro />} />
+
+        
       </Routes>
     </div>
   );
