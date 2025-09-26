@@ -7,48 +7,70 @@ import Aulas from "./pages/Aulas";
 import AulaDetalle from "./pages/AulaDetalle";
 import SolicitarCambio from "./pages/SolicitarCambio";
 import RevisarSolicitudes from "./pages/RevisarSolicitudes";
-export default App;
-export default function App() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
 
+function ProtectedRoute({ children, roles }) {
+  const { user, role, loading } = useAuth();
+
+  if (loading) return <p>Cargando...</p>;
+  if (!user) return <Navigate to="/" />;
+
+  if (roles && !roles.includes(role)) {
+    return <p className="text-center mt-5 text-danger">Acceso denegado</p>;
+  }
+
+  return children;
+}
+
+function App() {
   return (
-    <div className="container py-4">
-      <header className="d-flex justify-content-between align-items-center mb-4">
-        <h1 className="h4 m-0">Limpieza de Aulas • EPET N°20</h1>
-        <nav className="d-flex gap-2">
-          <Link className="btn btn-outline-light btn-sm" to="/">Inicio</Link>
-         
-          {user ? (
-            <>
-              <Link className="btn btn-outline-light btn-sm" to="/aulas">Aulas</Link>
-              <button className="btn btn-danger btn-sm" onClick={() => { logout(); navigate('/'); }}>Salir</button>
-              
-            </>
-          ) : (
-            <>
-              <Link className="btn btn-outline-light btn-sm" to="/inicio">Iniciar sesión</Link>
-              <Link className="btn btn-outline-light btn-sm" to="/registro">Registrarse</Link>
-            </>
-          )}
-        </nav>
-      </header>
+    <Routes>
+      <Route path="/" element={<Inicio />} />
+      <Route path="/registro" element={<Registro />} />
 
-      <Routes>
-        <Route path="/" element={<Navigate to={user ? '/aulas' : '/inicio'} />} />
-        <Route path="/inicio" element={<Inicio />} />
-        <Route path="/registro" element={<Registro />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/aulas" element={<AulaList />} />
-          <Route path="/aulas/:id" element={<AulaDetalle />} />
-          <Routes>
-  <Route path="/" element={<Navigate to={user ? '/aulas' : '/inicio'} />} />
-  <Route path="/inicio" element={<Inicio />} />
-  <Route path="/registro" element={<Registro />} />
+      {/* estudiantes: solo ven nomas */}
+      <Route
+        path="/aulas"
+        element={
+          <ProtectedRoute roles={["estudiante", "limpieza", "admin"]}>
+            <Aulas />
+          </ProtectedRoute>
+        }
+      />
 
-        
-      </Routes>
-    </div>
+      {/* limpieza: pone para solicitar cambio */}
+      <Route
+        path="/solicitar/:id"
+        element={
+          <ProtectedRoute roles={["limpieza"]}>
+            <SolicitarCambio />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* admin: revisa las solicitudes */}
+      <Route
+        path="/revisar"
+        element={
+          <ProtectedRoute roles={["admin"]}>
+            <RevisarSolicitudes />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* admin:pone el detalle delaula */}
+      <Route
+        path="/aulas/:id"
+        element={
+          <ProtectedRoute roles={["admin"]}>
+            <AulaDetalle />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* ruta por defecto */}
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 }
 
+export default App;
