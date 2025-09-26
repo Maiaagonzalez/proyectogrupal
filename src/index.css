@@ -102,8 +102,14 @@
 .login-form select:focus {
   border-color: #4770a7;
   outline: none;
+<<<<<<< HEAD
   box-shadow: 0 0 4px#4770a7;
 }
+=======
+  box-shadow: 0 0 4px #4770a7;
+}
+
+>>>>>>> ce981e9552efdcd75b32a041475352ea12ea7d52
 /* === PÁGINA DE AULAS === */
 .page-container {
   max-width: 900px;
@@ -239,3 +245,116 @@
   color: #666;
   font-style: italic;
 }
+<<<<<<< HEAD
+=======
+
+/* === REVISAR SOLICITUDES === */
+.solicitudes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.solicitud-card {
+  background: #849fee;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.solicitud-info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.solicitud-info p {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.solicitud-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* Botones de acción */
+.btn-success {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.15s;
+}
+
+.btn-success:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.15s;
+}
+
+.btn-danger:hover {
+  background: #b52d2a;
+  transform: scale(1.05);
+}
+
+.badge-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+/* === SOLICITAR CAMBIO === */
+.solicitud-form-card {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.solicitud-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.solicitud-form label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.solicitud-form select {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #333;
+}
+
+.solicitud-form select:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 4px #4a90e2;
+}
+>>>>>>> ce981e9552efdcd75b32a041475352ea12ea7d52

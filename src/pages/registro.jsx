@@ -1,60 +1,72 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebaseConfig";
+import { setDoc, doc } from "firebase/firestore";
 
 export default function Registro() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rol, setRol] = useState("estudiante");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      alert('Registro exitoso. Ahora puedes iniciar sesión.');
-      navigate('/login');
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+      await setDoc(doc(db, "users", cred.user.uid), {
+        email,
+        role: rol,
+      });
+
+      alert("Usuario registrado correctamente ✅");
+      navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="row justify-content-center">
-      <div className="col-12 col-md-6 col-lg-5">
-        <div className="card bg-dark p-4 shadow-lg">
-          <h2 className="h4 text-center mb-1">REGISTRARSE</h2>
-          <p className="text-center text-secondary mb-4">¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>.</p>
+    <div className="login-container">
+      <div className="login-card">
+        <h1 className="login-title">Sistema de Aulas</h1>
+        <p className="login-subtitle">Registro</p>
 
-          {error && <div className="alert alert-danger py-2">{error}</div>}
+        {error && <div className="login-error">{error}</div>}
 
-          <form onSubmit={handleSubmit} className="d-grid gap-3">
-            <div>
-              <label className="form-label">Correo electrónico</label>
-              <input
-                type="email"
-                className="form-control"
-                placeholder="correo@ejemplo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label className="form-label">Contraseña</label>
-              <input
-                type="password"
-                className="form-control"
-                placeholder=""
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" className="btn btn-primary">Registrar</button>
-          </form>
-        </div>
+        <form onSubmit={handleRegister} className="login-form">
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <select value={rol} onChange={(e) => setRol(e.target.value)}>
+            <option value="estudiante">Estudiante</option>
+            <option value="limpieza">Personal de Limpieza</option>
+            <option value="admin">Directivo</option>
+          </select>
+
+          <button type="submit" className="btn-login">
+            Registrar
+          </button>
+        </form>
+
+        <p className="login-footer">
+          ¿Ya tienes cuenta? <Link to="/">Inicia sesión</Link>
+        </p>
       </div>
     </div>
   );
