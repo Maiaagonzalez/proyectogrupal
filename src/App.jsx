@@ -1,13 +1,12 @@
-import { Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom';
-import Inicio from './pages/inicio';
-import Registro from './pages/registro';
-import AulaList from './pages/AulaList';
-import AulaDetalle from './pages/AulaDetalle';
-import ProtectedRoute from './routes/ProtectedRoute';
-import { useAuth } from './providers/AuthProvider';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./providers/AuthProvider";
 
-
-
+import Inicio from "./pages/inicio";
+import Registro from "./pages/registro";
+import Aulas from "./pages/Aulas";
+import AulaDetalle from "./pages/AulaDetalle";
+import SolicitarCambio from "./pages/SolicitarCambio";
+import RevisarSolicitudes from "./pages/RevisarSolicitudes";
 export default App;
 export default function App() {
   const { user, logout } = useAuth();
