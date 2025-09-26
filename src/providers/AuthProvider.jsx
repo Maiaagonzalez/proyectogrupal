@@ -1,25 +1,41 @@
-import { createContext, useContext, useEffect, useState, useMemo } from 'react';
-import { auth } from '../firebaseConfig';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../firebaseConfig";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
-const AuthCtx = createContext(null);
+const AuthCtx = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        const snap = await getDoc(doc(db, "users", u.uid));
+        if (snap.exists()) {
+          setRole(snap.data().role);
+        }
+        setUser(u);
+      } else {
+        setUser(null);
+        setRole(null);
+      }
       setLoading(false);
     });
     return () => unsub();
   }, []);
 
-  const logout = async () => { await signOut(auth); };
+  const logout = () => signOut(auth);
 
-  const value = useMemo(() => ({ user, logout, loading }), [user, loading]);
-  return <AuthCtx.Provider value={value}>{children}</AuthCtx.Provider>;
+  return (
+    <AuthCtx.Provider value={{ user, role, logout, loading }}>
+      {children}
+    </AuthCtx.Provider>
+  );
 }
 
-export function useAuth() { return useContext(AuthCtx); }
+export function useAuth() {
+  return useContext(AuthCtx);
+}
