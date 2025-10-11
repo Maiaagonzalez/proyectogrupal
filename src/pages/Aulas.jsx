@@ -83,7 +83,6 @@ export default function Aulas() {
                   </button>
                 )}
               </div>
-            </div>
           ))
         )}
       </div>
