@@ -1,78 +1,132 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
+import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { useAuth } from "../providers/AuthProvider";
-import AltaDato from "../components/AltaDato";
-import { Link, useNavigate } from "react-router-dom";
 
 export default function Aulas() {
   const [aulas, setAulas] = useState([]);
+  const [nuevoNombre, setNuevoNombre] = useState("");
+  const [nuevoEstado, setNuevoEstado] = useState("Limpio");
   const { role, logout } = useAuth();
   const navigate = useNavigate();
 
-  const cargarDatos = async () => {
-    const snapshot = await getDocs(collection(db, "aulas"));
-    setAulas(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
-  };
-
   useEffect(() => {
-    cargarDatos();
+    const fetchData = async () => {
+      const snapshot = await getDocs(collection(db, "aulas"));
+      setAulas(snapshot.docs.map((d) => ({ id: d.id, ...d.data() })));
+    };
+    fetchData();
   }, []);
 
-  const eliminarAula = async (id) => {
+  const handleDelete = async (id) => {
     await deleteDoc(doc(db, "aulas", id));
-    cargarDatos();
+    setAulas(aulas.filter((a) => a.id !== id));
   };
 
-  const handleLogout = async () => {
-    await logout();
-    navigate("/");
+  const handleAdd = async (e) => {
+    e.preventDefault();
+    if (!nuevoNombre.trim()) return alert("Por favor ingresa un nombre de aula.");
+
+    try {
+      const docRef = await addDoc(collection(db, "aulas"), {
+        nombre: nuevoNombre,
+        estado: nuevoEstado,
+      });
+      setAulas([...aulas, { id: docRef.id, nombre: nuevoNombre, estado: nuevoEstado }]);
+      setNuevoNombre("");
+      setNuevoEstado("Limpio");
+    } catch (error) {
+      console.error("Error al agregar aula:", error);
+    }
   };
 
   return (
     <div className="page-container">
-      <header className="page-header">
-        <h1>Gestión de Aulas</h1>
-        <button className="btn-logout" onClick={handleLogout}>
-          Salir
-        </button>
-      </header>
-
-      {/* Solo admin puede dar de alta aulas */}
-      {role === "admin" && (
-        <div className="alta-container">
-          <AltaDato onAdd={cargarDatos} />
+      <div className="aula-card">
+        {/* Encabezado */}
+        <div className="aula-header">
+          <h2>Lista de Aulas</h2>
+          <div>
+            {role === "admin" && (
+              <button
+                className="btn-secondary"
+                onClick={() => navigate("/revisar")}
+              >
+                Revisar solicitudes
+              </button>
+            )}
+            <button className="btn-salirb" onClick={logout}>
+              Salir
+            </button>
+          </div>
         </div>
-      )}
 
-      <div className="aulas-list">
-        {aulas.length === 0 ? (
-          <p className="empty-text">No hay aulas cargadas.</p>
-        ) : (
-          aulas.map((a) => (
-            <div key={a.id} className="aula-card">
-              <div className="aula-info">
-                <h3>{a.nombre}</h3>
-                <p>
-                  Estado:{" "}
-                  <span
-                    className={`badge ${
-                      a.estado === "Limpio" ? "badge-success" : "badge-danger"
-                    }`}
-                  >
-                    {a.estado}
-                  </span>
-                </p>
-              </div>
+        {/* Formulario para agregar aulas (solo admin) */}
+        {role === "admin" && (
+          <form className="aula-add-form" onSubmit={handleAdd}>
+            <input
+              type="text"
+              placeholder="Nombre del aula"
+              value={nuevoNombre}
+              onChange={(e) => setNuevoNombre(e.target.value)}
+              required
+            />
+            <select
+              value={nuevoEstado}
+              onChange={(e) => setNuevoEstado(e.target.value)}
+            >
+              <option value="Limpio">Limpio</option>
+              <option value="Sucio">Sucio</option>
+            </select>
+            <button type="submit" className="btn-login">
+              Agregar Aula
+            </button>
+          </form>
+        )}
 
-              <div className="aula-actions">
-                {/* Limpieza puede solicitar cambios */}
-                {role === "limpieza" && (
-                  <Link to={/solicitar/${a.id}} className="btn-warning">
-                    Solicitar cambio
-                  </Link>
-                )}
+        {/* Tabla de aulas */}
+        <table className="aula-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {aulas.map((aula) => (
+              <tr key={aula.id}>
+                <td>{aula.nombre}</td>
+                <td>{aula.estado}</td>
+                <td>
+                  {(role === "admin" || role === "estudiante") && (
+                    <Link to={/detalle/${aula.id}}>
+                      <button className="btn-login">Ver detalle</button>
+                    </Link>
+                  )}
 
+                  {role === "admin" && (
+                    <button
+                      className="btn-delete"
+                      onClick={() => handleDelete(aula.id)}
+                    >
+                      Eliminar
+                    </button>
+                  )}
+
+                  {role === "limpieza" && (
+                    <Link to={/solicitar/${aula.id}}>
+                      <button className="btn-secondary">
+                        Solicitar cambio
+                      </button>
+                    </Link>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
                 {/* Admin puede eliminar aulas */}
                 {role === "admin" && (
                   <button
