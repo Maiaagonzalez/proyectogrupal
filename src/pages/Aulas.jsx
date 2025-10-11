@@ -94,51 +94,37 @@ export default function Aulas() {
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            {aulas.map((aula) => (
-              <tr key={aula.id}>
-                <td>{aula.nombre}</td>
-                <td>{aula.estado}</td>
-                <td>
-                  {(role === "admin" || role === "estudiante") && (
-                    <Link to={/detalle/${aula.id}}>
-                      <button className="btn-login">Ver detalle</button>
-                    </Link>
-                  )}
-
-                  {role === "admin" && (
-                    <button
-                      className="btn-delete"
-                      onClick={() => handleDelete(aula.id)}
-                    >
-                      Eliminar
-                    </button>
-                  )}
-
-                  {role === "limpieza" && (
-                    <Link to={/solicitar/${aula.id}}>
-                      <button className="btn-secondary">
-                        Solicitar cambio
-                      </button>
-                    </Link>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-                {/* Admin puede eliminar aulas */}
-                {role === "admin" && (
-                  <button
-                    className="btn-danger"
-                    onClick={() => eliminarAula(a.id)}
-                  >
-                    Eliminar
-                  </button>
-                )}
-              </div>
-          ))
+<tbody>
+  {aulas.map((aula) => (
+    <tr key={aula.id}>
+      <td>{aula.nombre}</td>
+      <td>{aula.estado}</td>
+      <td>
+        {(role === "admin" || role === "estudiante") && (
+          <Link to={`/detalle/${aula.id}`}>
+            <button className="btn-login">Ver detalle</button>
+          </Link>
         )}
+
+        {role === "admin" && (
+          <button
+            className="btn-delete"
+            onClick={() => handleDelete(aula.id)}
+          >
+            Eliminar
+          </button>
+        )}
+
+        {role === "limpieza" && (
+          <Link to={`/solicitar/${aula.id}`}>
+            <button className="btn-secondary">Solicitar cambio</button>
+          </Link>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
+        </table>
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ export default function RevisarSolicitudes() {
               const aulaSnap = await getDoc(aulaRef);
               if (aulaSnap.exists()) {
                 const aulaData = aulaSnap.data();
-                nombreAula = aulaData.nombre || Aula ${aulaId};
+                nombreAula = aulaData.nombre || `Aula ${aulaId}`;
                 estadoActual = aulaData.estado || "Sin estado";
               }
             } catch (err) {
