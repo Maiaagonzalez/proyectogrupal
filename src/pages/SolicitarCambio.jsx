@@ -1,57 +1,72 @@
-import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { collection, addDoc, doc, getDoc } from "firebase/firestore";
+import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { useAuth } from "../providers/AuthProvider";
 
 export default function SolicitarCambio() {
-  const { id } = useParams(); // id del aula
-  const { user } = useAuth();
-  const [nuevoEstado, setNuevoEstado] = useState("Limpio");
+  const { id } = useParams();
+  const [nuevoEstado, setNuevoEstado] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const aulaSnap = await getDoc(doc(db, "aulas", id));
-    if (!aulaSnap.exists()) {
-      alert("El aula no existe");
-      return;
-    }
-    const aulaData = aulaSnap.data();
+    if (!nuevoEstado) return alert("Seleccioná el nuevo estado");
 
     await addDoc(collection(db, "solicitudes"), {
       aulaId: id,
-      usuarioId: user.uid,
-      estadoSolicitado: nuevoEstado,
-      estadoActual: aulaData.estado,
-      estadoSolicitud: "pendiente",
-      fecha: new Date().toISOString(),
+      solicitadoPor: user.email,
+      nuevoEstado,
+      estado: "pendiente",
+      fecha: Timestamp.now(),
     });
 
-    alert("Solicitud enviada ✅");
+    alert("Solicitud enviada correctamente ✅");
     navigate("/aulas");
   };
 
   return (
-    <div className="page-container">
+    <div className="solicitud-page">
       <div className="solicitud-form-card">
-        <h2>📩 Solicitar cambio de estado</h2>
-        <form onSubmit={handleSubmit} className="solicitud-form">
-          <label htmlFor="estado">Nuevo estado</label>
-          <select
-            id="estado"
-            value={nuevoEstado}
-            onChange={(e) => setNuevoEstado(e.target.value)}
-          >
-            <option value="Limpio">Limpio</option>
-            <option value="Sucio">Sucio</option>
-          </select>
+        <h2>Solicitar cambio de estado</h2>
+
+        <form className="solicitud-form" onSubmit={handleSubmit}>
+          <p>Seleccioná el nuevo estado del aula:</p>
+
+          <div className="radio-group">
+            <label>
+              <input
+                type="radio"
+                value="Limpio"
+                checked={nuevoEstado === "Limpio"}
+                onChange={(e) => setNuevoEstado(e.target.value)}
+              />
+              Aula Limpia
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="Sucio"
+                checked={nuevoEstado === "Sucio"}
+                onChange={(e) => setNuevoEstado(e.target.value)}
+              />
+              Aula Sucia
+            </label>
+          </div>
+
           <button type="submit" className="btn-login">
             Enviar solicitud
           </button>
         </form>
+
+        <button
+          className="btn-secondary volver-btn"
+          onClick={() => navigate("/aulas")}
+        >
+          ← Volver
+        </button>
       </div>
-    </div>
-  );
+    </div>
+  );
 }
