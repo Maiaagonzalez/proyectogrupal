@@ -96,6 +96,13 @@ El proyecto se trata sobre una pagina en la que se lleva el control de la limpie
 *Navegación con React Router
 *Separación por roles: frontend, backend, diseño, documentación.
 *Login simulado.
-![alt text](2abb.jpg)
-![alt text](<Imagen de WhatsApp 2025-09-02 a las 22.27.47_1fe34893.jpg>)
-![alt text](2ab.jpg)
+*Rutas protegidas
+*Detalle por id 
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
