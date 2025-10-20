@@ -94,36 +94,37 @@ export default function Aulas() {
               <th>Acciones</th>
             </tr>
           </thead>
-<tbody>
-  {aulas.map((aula) => (
-    <tr key={aula.id}>
-      <td>{aula.nombre}</td>
-      <td>{aula.estado}</td>
-      <td>
-        {(role === "admin" || role === "estudiante") && (
-          <Link to={`/detalle/${aula.id}`}>
-            <button className="btn-login">Ver detalle</button>
-          </Link>
-        )}
+          <tbody>
+            {aulas.map((aula) => (
+              <tr key={aula.id}>
+              <td data-label="Nombre">{aula.nombre}</td>
+              <td data-label="Estado">{aula.estado}</td>
+              <td data-label="Acciones">
+              {(role === "admin" || role === "estudiante" || role === "limpieza") && (
+              <Link to={`/detalle/${aula.id}`}>
+              <button className="btn-login">Ver detalle</button>
+              </Link>
+            )}
 
-        {role === "admin" && (
-          <button
-            className="btn-delete"
-            onClick={() => handleDelete(aula.id)}
-          >
+            {role === "admin" && (
+            <button
+              className="btn-delete"
+              onClick={() => handleDelete(aula.id)}
+            >
             Eliminar
-          </button>
-        )}
+            </button>
+            )}
 
-        {role === "limpieza" && (
-          <Link to={`/solicitar/${aula.id}`}>
-            <button className="btn-secondary">Solicitar cambio</button>
-          </Link>
-        )}
-      </td>
-    </tr>
-  ))}
-</tbody>
+            {role === "limpieza" && (
+              <Link to={`/solicitar/${aula.id}`}>
+              <button className="btn-secondary">Solicitar cambio</button>
+              </Link>
+            )}
+            </td>
+          </tr>
+          ))}
+          </tbody>
+
         </table>
       </div>
     </div>

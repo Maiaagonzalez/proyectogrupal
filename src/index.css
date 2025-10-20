@@ -239,37 +239,137 @@ a:hover {
   text-decoration: underline;
 }
 
-/* === MEDIA QUERY: RESPONSIVE (celulares y tablets) === */
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
-
-  .login-card,
-  .register-card {
-    padding: 2rem;
-    max-width: 90%;
-    transform: scale(1);
-  }
-
-  .aula-card,
-  .solicitud-form-card,
-  .detalle-card {
-    padding: 2rem;
-    width: 100%;
-    min-height: auto;
+/* ====== Ajustes responsivos para Aulas.jsx ====== */
+@media (max-width: 900px) {
+  .aula-card {
+    width: 95%;
+    padding: 1rem;
   }
 
   .aula-header {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .aula-add-form {
+    margin-left: 0;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .aula-add-form input,
+  .aula-add-form select,
+  .aula-add-form button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .aula-table {
+    font-size: 0.9rem;
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  .aula-table th,
+  .aula-table td {
+    padding: 0.4rem;
+    text-align: center;
+  }
+
+  .btn-login,
+  .btn-secondary,
+  .btn-delete {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* ====== Vista tipo "tarjeta" móvil mejorada para Aulas.jsx ====== */
+@media (max-width: 600px) {
+  .aula-table {
+    border-collapse: separate;
+    border-spacing: 0 1rem;
+    display: block;
+  }
+
+  .aula-table thead {
+    display: none;
+  }
+
+  .aula-table tbody {
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
   }
 
-  button {
+  .aula-table tr {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    text-align: center;
+  }
+
+  /* Fila con nombre y estado alineados horizontalmente */
+  .aula-info-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .aula-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+  }
+
+  .aula-info-item .label {
+    font-weight: bold;
+    color: #e3f2fd;
     font-size: 1rem;
-    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .aula-info-item .value {
+    color: #fff;
+    font-size: 1rem;
+  }
+
+  /* Acciones centradas debajo */
+  .aula-table td[data-label="Acciones"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .aula-table td[data-label="Acciones"]::before {
+    content: "Acciones";
+    font-weight: bold;
+    color: #e3f2fd;
+    font-size: 1.05rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .aula-table td[data-label="Acciones"] button {
+    width: 90%;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
   }
 }
+
+
+
+
 
 /* === SOLICITAR CAMBIO - centrado total y grande === */
 .solicitud-page {
@@ -606,6 +706,8 @@ a:hover {
   padding: 0.7rem 1.2rem;
   border: none;
   border-radius: 4px;
+  justify-items: center;
+  text-align: center;
   background-color: #82b1e8;
   color: white;
   cursor: pointer;
@@ -672,3 +774,26 @@ a:hover {
     min-width: 0;
   }
 }
+
+/* ====== Ajuste para botón secundario en Registro.jsx (solo móviles/tablets) ====== */
+@media (max-width: 768px) {
+  .btn-iniciar {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+    width: auto;
+    min-width: 110px;
+    align-self: center;
+  }
+
+  .btn-iniciar:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+  }
+}
+
