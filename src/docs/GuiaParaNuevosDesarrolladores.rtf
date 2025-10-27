@@ -1,0 +1,196 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang11274{\fonttbl{\f0\fnil\fcharset0 Times New Roman;}{\f1\fnil Times New Roman;}{\f2\fnil\fcharset1 Segoe UI Symbol;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.16299}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs36\lang10 Gu\'eda para Nuevos Desarrolladores \f1\endash\f0  Proyecto "Limpieza de Aulas"\par
+\fs28 1. Introducci\'f3n:\par
+\fs22 El sistema "Limpieza de Aulas" es una aplicaci\'f3n web desarrollada para gestionar el estado de limpieza de las aulas en la EPET N\'b020. Permite registrar usuarios, iniciar sesi\'f3n y actualizar el estado (limpio/sucio) de cada aula.\par
+\fs28 2. Requisitos previos:\par
+\fs22 Lista de lo que se necesita para poder ejecutar el proyecto:\par
+-Node.js y npm instalados\par
+ -Visual Studio Code o cualquier editor de c\'f3digo\par
+-Git (para control de versiones)\par
+-Navegador (Google Chrome, Edge, etc.)\fs28\par
+3. Instalaci\'f3n\par
+\fs22 Pasos para clonar y ejecutar el proyecto:\par
+-Clonar el repositorio\par
+git clone {{\field{\*\fldinst{HYPERLINK https://github.com/Maiaagonzalez/proyectogrupal }}{\fldrslt{https://github.com/Maiaagonzalez/proyectogrupal\ul0\cf0}}}}\f0\fs22\par
+ -Se entrar al proyecto\par
+cd Maiaagonzalez/proyctogrupal\par
+\par
+git pull se usa para bajar lo que otros subieron.\par
+git status muestra el estado actual del directorio de trabajo y del \'e1rea de preparaci\'f3n en Git\par
+git add. se utiliza para agregar archivos nuevos o modificados al \'e1rea de preparaci\'f3n\par
+git commit -m"la pagina"   utiliza el comando git commit para guardar la instant\'e1nea\par
+git push para subir \par
+-Se Instalan las dependencias\par
+npm install\par
+-Iniciar el servidor\par
+npm start\par
+\fs28 4. Estructura del proyecto\fs22\par
+Explicar el mapa de carpetas:\par
+/proyectogrupal\par
+\f2\u9474?\f0\par
+\f2\u9500?\u9472?\u9472?\f0  /.firebase/                       #configuraci\'f3n y datos locales de Firebase\par
+\f2\u9500?\u9472?\u9472?\f0  /.gitignore                       #Archivos a ignorar por Git\par
+\f2\u9500?\u9472?\u9472?\f0  /.firebaserc                      #Configuraci\'f3n del proyecto Firebase\par
+\f2\u9500?\u9472?\u9472?\f0  /firebase.json                    #Archivo de configuraci\'f3n principal de Firebase\par
+\f2\u9474?\f0\par
+\f2\u9500?\u9472?\u9472?\f0  /node_modules/                    #Librer\'edas instaladas con npm (React, Firebase, etc.)\par
+|\par
+\f2\u9500?\u9472?\u9472?\f0  /public/                          #Archivos p\'fablicos (visibles directamente en el navegador)\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  index.html                    #Archivo HTML principal\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  favicon.ico                   #\'cdcono de la app\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  manifest.json                 #Configuraci\'f3n PWA\par
+\f2\u9474?\f0    \f2\u9492?\u9472?\u9472?\f0  im\'e1genes y logos\par
+\f2\u9474?\f0\par
+\f2\u9500?\u9472?\u9472?\f0  /src/                             #C\'f3digo fuente principal de la aplicaci\'f3n\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  /components/                  #Componentes React (formularios, listas, etc.)\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  /dataconnect-generated/       #Archivos autogenerados por Firebase Data Connect\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  /pages/                       #P\'e1ginas de navegaci\'f3n (Inicio, Login, Registro, etc.)\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  /docs/                        #documentaci\'f3n de la p\'e1gina\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  /providers/                   #rutas y autenticaci\'f3n \par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  firebaseConfig.js             #Inicializaci\'f3n y configuraci\'f3n de Firebase\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  index.css                     #Im\'e1genes y estilos del proyecto\par
+\f2\u9474?\f0    \f2\u9500?\u9472?\u9472?\f0  App.js                        #Componente principal de React\par
+\f2\u9474?\f0    \f2\u9492?\u9472?\u9472?\f0  index.js                      #Punto de entrada de la app\par
+\fs28 5. Tecnolog\'edas usadas:\par
+\fs22 Frontend: React.js, HTML, CSS\par
+Backend: Node.js, \par
+Base de datos: firebaserc \par
+Documentacion: readme.md\par
+Control de versiones: Git/GitHub\par
+\fs28 6. Gu\'eda de desarrollo-ejemplo de una pagina nueva:\fs22\par
+import React, \{ useState, useEffect \} from 'react';\par
+import \{ BrowserRouter as Router, Routes, Route, Link \} from 'react-router-dom';\par
+import \{ Button \} from '@/components/ui/button';\par
+import \{ Card, CardContent, CardHeader, CardTitle \} from '@/components/ui/card';\par
+// P\'e1gina principal del sistema Limpieza de Aulas\par
+function Home() \{\par
+  return (\par
+    <div className="p-6 text-center space-y-4">\par
+      <h1 className="text-3xl font-bold">Sistema de Limpieza de Aulas</h1>\par
+      <p>Bienvenido al sistema. Desde aqu\'ed pod\'e9s acceder a la gu\'eda de desarrollo o gestionar aulas.</p>\par
+      <div className="flex justify-center gap-4">\par
+        <Link to="/guia"><Button>Gu\'eda de desarrollo</Button></Link>\par
+        <Link to="/aulas"><Button variant="outline">Gesti\'f3n de Aulas</Button></Link>\par
+      </div>\par
+    </div>\par
+  );\par
+\}\par
+// Componente de gesti\'f3n de aulas\par
+function GestionAulas() \{\par
+  const [aulas, setAulas] = useState([\par
+    \{ id: 1, nombre: 'Aula 1', estado: 'Limpio' \},\par
+    \{ id: 2, nombre: 'Aula 2', estado: 'Sucio' \}\par
+  ]);\par
+  const [nuevaAula, setNuevaAula] = useState('');\par
+  const [estado, setEstado] = useState('Limpio');\par
+  const agregarAula = () => \{\par
+    if (!nuevaAula.trim()) return;\par
+    const id = aulas.length + 1;\par
+    setAulas([...aulas, \{ id, nombre: nuevaAula, estado \}]);\par
+    setNuevaAula('');\par
+  \};\par
+  const cambiarEstado = (id) => \{\par
+    setAulas(\par
+      aulas.map((aula) =>\par
+        aula.id === id ? \{ ...aula, estado: aula.estado === 'Limpio' ? 'Sucio' : 'Limpio' \} : aula\par
+      )\par
+    );\par
+  \};\par
+  useEffect(() => \{\par
+    console.log('Aulas actualizadas:', aulas);\par
+  \}, [aulas]);\par
+  return (\par
+    <div className="p-6 space-y-4">\par
+      <h2 className="text-2xl font-bold">Gesti\'f3n de Aulas</h2>\par
+      <div className="flex items-center gap-2">\par
+        <input\par
+          type="text"\par
+          placeholder="Nombre del aula"\par
+          value=\{nuevaAula\}\par
+          onChange=\{(e) => setNuevaAula(e.target.value)\}\par
+          className="border p-2 rounded w-1/2"\par
+        />\par
+        <select\par
+          value=\{estado\}\par
+          onChange=\{(e) => setEstado(e.target.value)\}\par
+          className="border p-2 rounded"\par
+        >\par
+          <option value="Limpio">Limpio</option>\par
+          <option value="Sucio">Sucio</option>\par
+        </select>\par
+        <Button onClick=\{agregarAula\}>Agregar Aula</Button>\par
+      </div>\par
+      <ul className="mt-4 space-y-2">\par
+        \{aulas.map((aula) => (\par
+          <li key=\{aula.id\} className="flex justify-between bg-gray-100 p-2 rounded">\par
+            <span>\{aula.nombre\} - Estado: \{aula.estado\}</span>\par
+            <Button variant="outline" onClick=\{() => cambiarEstado(aula.id)\}>\par
+              Cambiar estado\par
+            </Button>\par
+          </li>\par
+        ))\}\par
+      </ul>\par
+      <Link to="/"><Button variant="link">Volver al inicio</Button></Link>\par
+    </div>\par
+  );\par
+\}\par
+// P\'e1gina de gu\'eda de desarrollo\par
+function GuiaDesarrollo() \{\par
+  return (\par
+    <div className="p-6 space-y-6">\par
+      <Card className="shadow-xl">\par
+        <CardHeader>\par
+          <CardTitle>6. Gu\'eda de desarrollo</CardTitle>\par
+        </CardHeader>\par
+        <CardContent className="space-y-4">\par
+          <section>\par
+            <h2 className="font-semibold text-lg">C\'f3mo crear una nueva p\'e1gina o componente</h2>\par
+            <p>Crear un archivo nuevo dentro de <code>/src/components</code> o <code>/src/pages</code>. Luego importarlo y usarlo dentro de App.jsx.</p>\par
+          </section>\par
+          <section>\par
+            <h2 className="font-semibold text-lg">C\'f3mo agregar una nueva aula o modificar el estado</h2>\par
+            <p>Pod\'e9s agregar un componente que use <code>useState</code> para manejar las aulas y un bot\'f3n que cambie su estado de Limpio a Sucio.</p>\par
+          </section>\par
+          <section>\par
+            <h2 className="font-semibold text-lg">Buenas pr\'e1cticas</h2>\par
+            <ul className="list-disc ml-6">\par
+              <li>Usar nombres descriptivos para variables y componentes.</li>\par
+              <li>Organizar carpetas seg\'fan funcionalidad.</li>\par
+              <li>Reutilizar componentes cuando sea posible.</li>\par
+              <li>Usar clases de Tailwind para estilos consistentes.</li>\par
+            </ul>\par
+          </section>\par
+          <section>\par
+            <h2 className="font-semibold text-lg">Uso de useState, useEffect y props (React)</h2>\par
+            <p>\par
+              <code>useState</code> permite manejar estados locales, como el listado de aulas o el texto de entrada.<br />\par
+              <code>useEffect</code> se utiliza para ejecutar c\'f3digo cuando cambia un estado o al montar el componente.<br />\par
+              Las <code>props</code> sirven para pasar datos entre componentes.\par
+            </p>\par
+          </section>\par
+          <Link to="/"><Button variant="link">Volver al inicio</Button></Link>\par
+        </CardContent>\par
+      </Card>\par
+    </div>\par
+  );\par
+\}\par
+// Aplicaci\'f3n principal con rutas\par
+export default function App() \{\par
+  return (\par
+    <Router>\par
+      <Routes>\par
+        <Route path="/" element=\{<Home />\} />\par
+        <Route path="/aulas" element=\{<GestionAulas />\} />\par
+        <Route path="/guia" element=\{<GuiaDesarrollo />\} />\par
+      </Routes>\par
+    </Router>\par
+  );\par
+\}\par
+\fs28 7. Cr\'e9ditos / Equipo de desarrollo\par
+\fs22 Proyecto desarrollado por los alumnos de la EPET N\'b020\par
+Curso: 6\'b01\par
+Integrantes: Calfin Abril, Garrido Molena, Molina Alan, Cesari Lautaro, Gonzalez Maia.\lang10\par
+}
+ 
