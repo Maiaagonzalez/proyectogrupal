@@ -1,5 +1,6 @@
 {
   "name": "proyectogrupal",
+  "homepage": "https://<tu-usuario>.github.io/proyectogrupal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,6 +30,7 @@
     "file-loader": "^6.2.0",
     "firebase": "^12.4.0",
     "fs-extra": "^10.0.0",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.3",
@@ -64,7 +66,10 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
