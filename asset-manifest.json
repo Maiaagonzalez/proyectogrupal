@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/proyectogrupal/static/css/main.9ff4336a.css",
+    "main.js": "/proyectogrupal/static/js/main.9e8d0bac.js",
+    "index.html": "/proyectogrupal/index.html",
+    "main.9ff4336a.css.map": "/proyectogrupal/static/css/main.9ff4336a.css.map",
+    "main.9e8d0bac.js.map": "/proyectogrupal/static/js/main.9e8d0bac.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9ff4336a.css",
+    "static/js/main.9e8d0bac.js"
+  ]
+}
