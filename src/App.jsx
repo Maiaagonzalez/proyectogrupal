@@ -6,7 +6,7 @@ import Aulas from "./pages/Aulas";
 import RevisarSolicitudes from "./pages/RevisarSolicitudes";
 import SolicitarCambio from "./pages/SolicitarCambio";
 import Detalle from "./pages/Detalle";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import ProtectedRoute from "./providers/routes/ProtectedRoute";
 
 export default function App() {
   return (
