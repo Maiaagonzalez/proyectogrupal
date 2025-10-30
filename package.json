@@ -2,7 +2,7 @@
   "name": "proyectogrupal",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Maiaagonzalez.github.io/proyectogrupal",
+  "homepage": "https://maiaagonzalez.github.io/proyectogrupal",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@dataconnect/generated": "file:src/dataconnect-generated",
