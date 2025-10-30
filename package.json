@@ -1,8 +1,8 @@
 {
   "name": "proyectogrupal",
-  "homepage": "https://<tu-usuario>.github.io/proyectogrupal",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Maiaagonzalez.github.io/proyectogrupal",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@dataconnect/generated": "file:src/dataconnect-generated",
@@ -49,6 +49,7 @@
     "react-dom": "^19.1.0",
     "react-refresh": "^0.11.0",
     "react-router-dom": "^7.9.4",
+    "react-scripts": "^5.0.1",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",
@@ -63,14 +64,16 @@
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
   },
+
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  },
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
+},
+
   "eslintConfig": {
     "extends": [
       "react-app",

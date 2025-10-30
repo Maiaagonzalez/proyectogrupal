@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./providers/AuthProvider";
 import Inicio from "./pages/inicio";
 import Registro from "./pages/registro";
@@ -11,6 +11,7 @@ import ProtectedRoute from "./providers/routes/ProtectedRoute";
 export default function App() {
   return (
     <AuthProvider>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Routes>
           {/* Público */}
           <Route path="/" element={<Inicio />} />
@@ -29,7 +30,7 @@ export default function App() {
           <Route
             path="/detalle/:id"
             element={
-              <ProtectedRoute roles={["admin", "estudiante"]}>
+              <ProtectedRoute roles={["admin", "estudiante", "limpieza"]}>
                 <Detalle />
               </ProtectedRoute>
             }
@@ -53,6 +54,7 @@ export default function App() {
             }
           />
         </Routes>
+      </BrowserRouter>
     </AuthProvider>
-  );
+    );
 }
