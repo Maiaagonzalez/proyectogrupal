@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./providers/AuthProvider";
 import Inicio from "./pages/inicio";
 import Registro from "./pages/registro";
@@ -11,50 +11,45 @@ import ProtectedRoute from "./providers/routes/ProtectedRoute";
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Routes>
-          {/* Público */}
-          <Route path="/" element={<Inicio />} />
-          <Route path="/registro" element={<Registro />} />
+      <Routes>
+        {/* Público */}
+        <Route path="/" element={<Inicio />} />
+        <Route path="/registro" element={<Registro />} />
 
-          {/* Solo logueados */}
-          <Route
-            path="/aulas"
-            element={
-              <ProtectedRoute roles={["admin", "estudiante", "limpieza"]}>
-                <Aulas />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/detalle/:id"
-            element={
-              <ProtectedRoute roles={["admin", "estudiante", "limpieza"]}>
-                <Detalle />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/revisar"
-            element={
-              <ProtectedRoute roles={["admin"]}>
-                <RevisarSolicitudes />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/solicitar/:id"
-            element={
-              <ProtectedRoute roles={["limpieza"]}>
-                <SolicitarCambio />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
+        {/* Solo logueados */}
+        <Route
+          path="/aulas"
+          element={
+            <ProtectedRoute roles={["admin", "estudiante", "limpieza"]}>
+              <Aulas />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/detalle/:id"
+          element={
+            <ProtectedRoute roles={["admin", "estudiante", "limpieza"]}>
+              <Detalle />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/revisar"
+          element={
+            <ProtectedRoute roles={["admin"]}>
+              <RevisarSolicitudes />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/solicitar/:id"
+          element={
+            <ProtectedRoute roles={["limpieza"]}>
+              <SolicitarCambio />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </AuthProvider>
-    );
+  );
 }
