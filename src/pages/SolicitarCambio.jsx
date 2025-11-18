@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { useAuth } from "../providers/AuthProvider";
+import emailjs from "@emailjs/browser";
 
 export default function SolicitarCambio() {
   const { id } = useParams();
@@ -14,16 +15,33 @@ export default function SolicitarCambio() {
     e.preventDefault();
     if (!nuevoEstado) return alert("Seleccioná el nuevo estado");
 
-    await addDoc(collection(db, "solicitudes"), {
-      aulaId: id,
-      solicitadoPor: user.email,
-      nuevoEstado,
-      estado: "pendiente",
-      fecha: Timestamp.now(),
-    });
+    try {
+      await addDoc(collection(db, "solicitudes"), {
+        aulaId: id,
+        solicitadoPor: user.email,
+        nuevoEstado,
+        estado: "pendiente",
+        fecha: Timestamp.now(),
+      });
 
-    alert("Solicitud enviada correctamente ✅");
-    navigate("/aulas");
+      await emailjs.send(
+        "service_86b5kdj", 
+        "template_htetkvh", 
+        {
+          aula: id,
+          solicitadoPor: user.email,
+          nuevoEstado: nuevoEstado,
+          fecha: new Date().toLocaleString(),
+        },
+        "N_n2Ujg6isGmEKPC7" // <-- reemplazar
+      );
+
+      alert("Solicitud enviada y correo enviado al administrador ✉️");
+      navigate("/aulas");
+    } catch (error) {
+      console.error("Error enviando solicitud:", error);
+      alert("Hubo un error enviando la solicitud");
+    }
   };
 
   return (
@@ -44,6 +62,7 @@ export default function SolicitarCambio() {
               />
               Aula Limpia
             </label>
+
             <label>
               <input
                 type="radio"
@@ -67,6 +86,6 @@ export default function SolicitarCambio() {
           ← Volver
         </button>
       </div>
-    </div>
-  );
+    </div>
+  );
 }

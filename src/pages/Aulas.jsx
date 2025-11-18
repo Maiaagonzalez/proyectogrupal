@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc, addDoc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, addDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { useAuth } from "../providers/AuthProvider";
@@ -18,10 +18,21 @@ export default function Aulas() {
     };
     fetchData();
   }, []);
+  const aulasActivas = aulas.filter(a => !a.eliminado);
 
   const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "aulas", id));
-    setAulas(aulas.filter((a) => a.id !== id));
+    try {
+      await updateDoc(doc(db, "aulas", id), {
+        eliminado: true,
+        fechaEliminacion: new Date(),
+      });
+
+      setAulas(prev => prev.filter(a => a.id !== id));
+
+      alert("Aula marcada como eliminada");
+    } catch (error) {
+      console.error("Error al eliminar (soft delete):", error);
+    }
   };
 
   const handleAdd = async (e) => {
@@ -95,8 +106,8 @@ export default function Aulas() {
             </tr>
           </thead>
           <tbody>
-            {aulas.map((aula) => (
-              <tr key={aula.id}>
+            {aulasActivas.map((aula) => (
+               <tr key={aula.id}>
               <td data-label="Nombre">{aula.nombre}</td>
               <td data-label="Estado">{aula.estado}</td>
               <td data-label="Acciones">
